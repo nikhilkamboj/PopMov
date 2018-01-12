@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(clickedItem);
     }
 
-// more to be done 1st complete the json data getting portion then move here.
+//  this a  test comment to test git merge
     public class FetchMovieData extends AsyncTask<String, Void, String[]>{
         @Override
         protected String[] doInBackground(String... params) {
