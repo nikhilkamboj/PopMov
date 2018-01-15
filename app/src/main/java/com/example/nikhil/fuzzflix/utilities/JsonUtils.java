@@ -15,8 +15,12 @@ import java.util.ArrayList;
  * Created by nikhil on 11/01/18.
  */
 
-public class JsonUtils {
+/**
+ * this class is used to traverse the JSON object received to extract useful data from it through getMovieDataFromJsonString()
+ * which returns for now a simple String array
+ */
 
+public class JsonUtils {
 
     /**
      * traverses the json Object and gets the required data to be shown on_screen.
@@ -35,7 +39,6 @@ public class JsonUtils {
      * @param context             which viw called it
      * @param jsonObjectString    the JSON Object we received from HttpRequest call
      */
-
     public String[] getMovieDataFromJsonString(Context context, String jsonObjectString){
         String[] nameArrayString = null;
 
@@ -57,7 +60,9 @@ public class JsonUtils {
                 dataObject = new DisplayData();
                 JSONObject resultArrayObjects = resultArray.getJSONObject(i);
                 String nameOfMovie = resultArrayObjects.getString(AppConstants.getTitleAttribute());
-                nameArrayString[i] = nameOfMovie;
+                String releaseDateOfMovie = resultArrayObjects.getString(AppConstants.getReleaseDateAttribute());
+                String ratingOfMovie = resultArrayObjects.getString(AppConstants.getRatingAttribute());
+                nameArrayString[i] = nameOfMovie + "\n" + releaseDateOfMovie + "\n" + ratingOfMovie;
 
                 dataObject.setTitleOfMovie(resultArrayObjects.getString(AppConstants.getTitleAttribute()));
                 dataObject.setDateOfRelease(resultArrayObjects.getString(AppConstants.getReleaseDateAttribute()));

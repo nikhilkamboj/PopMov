@@ -96,6 +96,17 @@ public class AppConstants {
     private static final String OVERVIEW_ATTRIBUTE = "overview";
 
 
+
+//   read time for the network call.
+    private static final int READ_TIMEOUT = 15000;
+
+//    connection timeout for the network call.
+    private static final int CONNECTION_TIMEOUT = 15000;
+
+//    type of connection to be establihed internally
+    private static final String CONNECTION_TYPE = "GET";
+
+
     /* **************************************END****************************************************** */
 
     public static String getMainPosterPathAttribute() {
@@ -175,6 +186,15 @@ public class AppConstants {
         return API_AUTHENTICATION_KEY_VALUE;
     }
 
+    public static int getReadTimeout() {
+        return READ_TIMEOUT;
+    }
 
+    public static int getConnectionTimeout() {
+        return CONNECTION_TIMEOUT;
+    }
 
+    public static String getConnectionType() {
+        return CONNECTION_TYPE;
+    }
 }
