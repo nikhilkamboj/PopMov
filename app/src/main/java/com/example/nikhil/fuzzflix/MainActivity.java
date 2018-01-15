@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * this method calls AsyncTask to start execution by sending them selectedFilter which is filter for
-     * popular or top_rated movie. this sends one of the two to the doInBackground() for further execution.
+     * popular or top_rated movie. this sends one of the two to the doInBackground() for further executions.
      *
      * @param selectedFilter type of data user wats to receive parameter (popular or top_rated)
      */
