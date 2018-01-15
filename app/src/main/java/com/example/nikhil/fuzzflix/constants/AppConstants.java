@@ -32,8 +32,8 @@ public class AppConstants {
     //    image path appender-2 p
     private static final String P = "p";
 
-    //    size of the poster is defined here, using w300 a medium size poster(image path appender-3)
-    private static final String IMAGE_SIZE = "w300";
+    //    size of the poster is defined here, using w500 a medium size poster(image path appender-3)
+    private static final String IMAGE_SIZE = "w500";
 
 
  /* ----------------------------------------END IMAGE URL----------------------------------------------------------- */

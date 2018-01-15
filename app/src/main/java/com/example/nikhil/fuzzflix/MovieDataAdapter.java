@@ -1,11 +1,19 @@
 package com.example.nikhil.fuzzflix;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
+
+import com.example.nikhil.fuzzflix.data.DisplayData;
+import com.example.nikhil.fuzzflix.utilities.NetworkUtils;
+import com.squareup.picasso.Picasso;
+
+import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by nikhil on 13/01/18.
@@ -21,10 +29,11 @@ import android.widget.TextView;
 
 public class MovieDataAdapter extends RecyclerView.Adapter<MovieDataAdapter.MovieDataAdapterViewHolder>{
 
-    String[] mMovieData;
+    ArrayList<DisplayData> mMovieDataList;
 
     /**
-     * this method is called when there is a need for viewHolders on the screen. when Recycle View is out of viewHolders
+     * this method is called when there is a need for viewHolders
+     * on the screen. when Recycle View is out of viewHolders
      * this method gets called to create new ViewHolders.
      *
      *@param viewGroup view around which these viewHolders are contained into.
@@ -59,8 +68,19 @@ public class MovieDataAdapter extends RecyclerView.Adapter<MovieDataAdapter.Movi
      */
     @Override
     public void onBindViewHolder(MovieDataAdapterViewHolder movieHolder, int position) {
-        String movieDataForPosition = mMovieData[position];
-        movieHolder.mTitleTextView.setText(movieDataForPosition);
+        String mainPosterPath = mMovieDataList.get(position).getPosterPath();
+        URL imageUrl = new NetworkUtils().buildImageUrl(mainPosterPath);
+        String imageStringUrl = null;
+        try{
+            imageStringUrl = java.net.URLDecoder.decode(imageUrl.toString(), "UTF-8");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Uri imageUri = Uri.parse(imageStringUrl);
+        Context context = movieHolder.mPosterPathImageView.getContext();
+        Picasso.with(context)
+                .load(imageUri)
+                .into(movieHolder.mPosterPathImageView);
     }
 
 
@@ -71,10 +91,10 @@ public class MovieDataAdapter extends RecyclerView.Adapter<MovieDataAdapter.Movi
      */
     @Override
     public int getItemCount() {
-        if(mMovieData == null){
+        if(mMovieDataList == null){
             return 0;
         }
-        return mMovieData.length;
+        return mMovieDataList.size();
     }
 
 
@@ -82,16 +102,13 @@ public class MovieDataAdapter extends RecyclerView.Adapter<MovieDataAdapter.Movi
      * Cache of the children views for a movie list item.
      */
     public class MovieDataAdapterViewHolder extends RecyclerView.ViewHolder{
-        TextView mTitleTextView;
-        TextView mReleaseDateTextView;
-        TextView mRatingTextView;
+        ImageView mPosterPathImageView;
+
 
 
         public MovieDataAdapterViewHolder(View itemView) {
             super(itemView);
-            mTitleTextView = (TextView) itemView.findViewById(R.id.tv_title_list_id);
-            mReleaseDateTextView = (TextView) itemView.findViewById(R.id.tv_release_date_list_id);
-            mRatingTextView = (TextView) itemView.findViewById(R.id.tv_rating_list_id);
+            mPosterPathImageView = (ImageView) itemView.findViewById(R.id.iv_main_poster);
         }
     }
 
@@ -100,8 +117,8 @@ public class MovieDataAdapter extends RecyclerView.Adapter<MovieDataAdapter.Movi
      *
      * @param movieData this is the movieData to be dispalyed
      */
-    public void setMovieData(String[] movieData) {
-        mMovieData = movieData;
+    public void setMovieData(ArrayList<DisplayData> movieData) {
+        mMovieDataList = movieData;
         notifyDataSetChanged();
     }
 }

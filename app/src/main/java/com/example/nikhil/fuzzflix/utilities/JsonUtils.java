@@ -39,7 +39,7 @@ public class JsonUtils {
      * @param context             which viw called it
      * @param jsonObjectString    the JSON Object we received from HttpRequest call
      */
-    public String[] getMovieDataFromJsonString(Context context, String jsonObjectString){
+    public ArrayList<DisplayData> getMovieDataFromJsonString(Context context, String jsonObjectString){
         String[] nameArrayString = null;
 
         DisplayData dataObject;
@@ -59,10 +59,12 @@ public class JsonUtils {
             for(int i = 0; i < resultArray.length(); i++){
                 dataObject = new DisplayData();
                 JSONObject resultArrayObjects = resultArray.getJSONObject(i);
-                String nameOfMovie = resultArrayObjects.getString(AppConstants.getTitleAttribute());
-                String releaseDateOfMovie = resultArrayObjects.getString(AppConstants.getReleaseDateAttribute());
-                String ratingOfMovie = resultArrayObjects.getString(AppConstants.getRatingAttribute());
-                nameArrayString[i] = nameOfMovie + "\n" + releaseDateOfMovie + "\n" + ratingOfMovie;
+//                String nameOfMovie = resultArrayObjects.getString(AppConstants.getTitleAttribute());
+//                String releaseDateOfMovie = resultArrayObjects.getString(AppConstants.getReleaseDateAttribute());
+//                String ratingOfMovie = resultArrayObjects.getString(AppConstants.getRatingAttribute());
+                String posterPath = resultArrayObjects.getString(AppConstants.getMainPosterPathAttribute());
+                nameArrayString[i] = posterPath;
+
 
                 dataObject.setTitleOfMovie(resultArrayObjects.getString(AppConstants.getTitleAttribute()));
                 dataObject.setDateOfRelease(resultArrayObjects.getString(AppConstants.getReleaseDateAttribute()));
@@ -77,7 +79,7 @@ public class JsonUtils {
             e.printStackTrace();
         }
 
-        return nameArrayString;
+        return dataObjectsArrayList;
     }
 
 

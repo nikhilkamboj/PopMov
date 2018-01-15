@@ -3,17 +3,19 @@ package com.example.nikhil.fuzzflix;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.nikhil.fuzzflix.constants.AppConstants;
+import com.example.nikhil.fuzzflix.data.DisplayData;
 import com.example.nikhil.fuzzflix.utilities.JsonUtils;
 import com.example.nikhil.fuzzflix.utilities.NetworkUtils;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recycle_view_container);
 
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        GridLayoutManager layoutManager
+                = new GridLayoutManager(this, 2);
 
         mRecyclerView.setLayoutManager(layoutManager);
 
@@ -107,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * RecyclerView(ADAPTER) created with xml file for lists, some tweaks into JSON class done, refactored the code for cooments
      */
-    public class FetchMovieData extends AsyncTask<String, Void, String[]>{
+    public class FetchMovieData extends AsyncTask<String, Void, ArrayList<DisplayData>>{
 
         /**
          * this method helps to set a targeted URL and also a network connection to that URL using
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
          * @return a string array to the onPostExecute method that needs to be displayed on-screen
          */
         @Override
-        protected String[] doInBackground(String... params) {
+        protected ArrayList<DisplayData> doInBackground(String... params) {
 
             if(params.length == 0){
                 return null;
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
             String filterType = params[0];
 
-            String [] result = null;
+            ArrayList<DisplayData> resultArrayList = null;
 
             NetworkUtils networkUtils = new NetworkUtils();
 
@@ -139,16 +141,14 @@ public class MainActivity extends AppCompatActivity {
 
                 JsonUtils jsonUtils = new JsonUtils();
 
-                result = jsonUtils.getMovieDataFromJsonString(MainActivity.this, movieData);
+                resultArrayList = jsonUtils.getMovieDataFromJsonString(MainActivity.this, movieData);
 
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
 
-
-
-            return result;
+            return resultArrayList;
         }
 
 
@@ -161,8 +161,8 @@ public class MainActivity extends AppCompatActivity {
          * @param strings
          */
         @Override
-        protected void onPostExecute(String[] strings) {
-            mMovieAdapter.setMovieData(strings);
+        protected void onPostExecute(ArrayList<DisplayData> resultArrayList) {
+            mMovieAdapter.setMovieData(resultArrayList);
         }
     }
 
