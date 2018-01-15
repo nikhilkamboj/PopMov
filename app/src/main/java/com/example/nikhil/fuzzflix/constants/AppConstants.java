@@ -32,8 +32,8 @@ public class AppConstants {
     //    image path appender-2 p
     private static final String P = "p";
 
-    //    size of the poster is defined here, using w300 a medium size poster(image path appender-3)
-    private static final String IMAGE_SIZE = "w300";
+    //    size of the poster is defined here, using w500 a medium size poster(image path appender-3)
+    private static final String IMAGE_SIZE = "w500";
 
 
  /* ----------------------------------------END IMAGE URL----------------------------------------------------------- */
@@ -94,6 +94,17 @@ public class AppConstants {
 
     //   overview of the movie attribute
     private static final String OVERVIEW_ATTRIBUTE = "overview";
+
+
+
+//   read time for the network call.
+    private static final int READ_TIMEOUT = 15000;
+
+//    connection timeout for the network call.
+    private static final int CONNECTION_TIMEOUT = 15000;
+
+//    type of connection to be establihed internally
+    private static final String CONNECTION_TYPE = "GET";
 
 
     /* **************************************END****************************************************** */
@@ -175,6 +186,15 @@ public class AppConstants {
         return API_AUTHENTICATION_KEY_VALUE;
     }
 
+    public static int getReadTimeout() {
+        return READ_TIMEOUT;
+    }
 
+    public static int getConnectionTimeout() {
+        return CONNECTION_TIMEOUT;
+    }
 
+    public static String getConnectionType() {
+        return CONNECTION_TYPE;
+    }
 }

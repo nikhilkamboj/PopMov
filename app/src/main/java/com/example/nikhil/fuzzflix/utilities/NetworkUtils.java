@@ -14,26 +14,31 @@ import java.net.URL;
 /**
  * Created by nikhil on 11/01/18.
  */
-/*
-      ************************* HANDLES NETWORK RELATED OPERATIONS ************************
-      * USES buildUrl() for the purpose of creating a target url to reach the desired site (Returns URL).
-      * USES buildImageUrl(), from the Json Object received we get the poster Path to create an Image Url.
-      * USES getResponseFromHttpUrl() to set the connection and then getting the result from the set connection.(Returns String)
+/**
+ *  ************************* HANDLES NETWORK RELATED OPERATIONS ************************
+ *  USES buildUrl() for the purpose of creating a target url to reach the desired site (Returns URL).
+ *  USES buildImageUrl(), from the Json Object received we get the poster Path to create an Image Url.
+ *  USES getResponseFromHttpUrl() to set the connection and then getting the result from the set connection.(Returns String)
+ *
+ *
+ *
  */
 
 // TODO there needs to be more crisp and clear comments do in 2nd run and also modification in buildURl methods.
 public class NetworkUtils {
 
 
-    public static final int READ_TIMEOUT = 15000;
-    public static final int CONNECTION_TIMEOUT = 15000;
-
     //    this part of the Image Url would be retrieved from the received JSon Object(image path appender-4)
     private String mPosterPath = "";
 
     String inputLine;
 
-//     creates and return base Movie Url.
+    /**
+     * this method uses Uri.Builder to build the url for the network call
+     *
+     * @param filterType type of URL required popular or top_rated.
+     * @return returns a url as per the user preference
+     */
     public URL buildBaseUrl(String filterType){
 
         URL url = null;
@@ -56,8 +61,12 @@ public class NetworkUtils {
         return url;
     }
 
-
-//     creates and return image url.
+    /**
+     * uses Uri.Builder to build a image Url to reach to the poster of particular movie.
+     *
+     * @param posterPath this is the poster path required for the image URL
+     * @return returns a IMAGE URL
+     */
     public URL buildImageUrl(String posterPath){
         mPosterPath = posterPath;
         URL url = null;
@@ -79,8 +88,17 @@ public class NetworkUtils {
 
     }
 
-
-//     connecting to the url and getting back a response
+    /**
+     *
+     * this method sets network connection to the url received and gets JSON data from there.
+     *
+     * uses InputStreamReader and BufferedReader to receive the inputStream of data and append that stream to the
+     * StringBuilder which would be converted to the String object upon return.
+     *
+     * @param url receives the URl over which a request needs to be made
+     * @return String Object received by calling the url usually a JSON type.
+     * @throws IOException
+     */
     public String getHttpUrlRequest(URL url) throws IOException{
 
         StringBuilder stringBuilder = null;
@@ -89,9 +107,9 @@ public class NetworkUtils {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
         try {
-            urlConnection.setRequestMethod("GET");
-            urlConnection.setReadTimeout(READ_TIMEOUT);
-            urlConnection.setConnectTimeout(CONNECTION_TIMEOUT);
+            urlConnection.setRequestMethod(AppConstants.getConnectionType());
+            urlConnection.setReadTimeout(AppConstants.getReadTimeout());
+            urlConnection.setConnectTimeout(AppConstants.getConnectionTimeout());
 
             urlConnection.connect();
 
@@ -122,12 +140,6 @@ public class NetworkUtils {
         return stringBuilder.toString();
     }
 
-
-// more comments required.
-
-
-    // https://api.themoviedb.org/3/movie/popular?api_key=<<api_key>>&language=en-US&page=1
-    //https://api.themoviedb.org/3/movie/top_rated?api_key=<<api_key>>&language=en-US&page=1
 
 
 
