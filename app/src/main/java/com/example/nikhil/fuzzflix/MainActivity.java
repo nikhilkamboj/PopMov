@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(clickedItem);
     }
 
-//  this a  test comment to test git merge
+    //  fetches movie data from url
     public class FetchMovieData extends AsyncTask<String, Void, String[]>{
         @Override
         protected String[] doInBackground(String... params) {
